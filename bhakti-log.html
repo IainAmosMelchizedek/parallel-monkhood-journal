@@ -2,282 +2,508 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Bhakti Practice Log</title>
+  <title>Parallel Monkhood Journal</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
+    :root {
+      --bg: #020617;
+      --bg-elevated: #0b1220;
+      --border: #1f2937;
+      --accent: #facc15;
+      --accent-soft: #fef3c7;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --danger: #f87171;
+    }
+    * {
+      box-sizing: border-box;
+    }
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       margin: 0;
-      padding: 0;
-      background: #0f172a;
-      color: #e5e7eb;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #111827 0, #020617 55%);
+      color: var(--text);
     }
     header {
-      background: #111827;
-      padding: 1.5rem 2rem;
-      border-bottom: 1px solid #1f2937;
+      padding: 1.5rem 1.75rem 1rem;
+      border-bottom: 1px solid var(--border);
+      background: rgba(3, 7, 18, 0.9);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 20;
     }
-    h1 {
+    .title {
       margin: 0;
-      font-size: 1.7rem;
-      letter-spacing: 0.05em;
+      font-size: 1.8rem;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
+    }
+    .subtitle {
+      margin: 0.35rem 0 0;
+      color: var(--muted);
+      font-size: 0.9rem;
     }
     main {
-      max-width: 960px;
-      margin: 2rem auto;
-      padding: 0 1.5rem 3rem;
+      max-width: 1120px;
+      margin: 1.5rem auto 3rem;
+      padding: 0 1.5rem;
     }
     .card {
-      background: #111827;
-      border-radius: 0.75rem;
-      padding: 1.75rem;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
-      border: 1px solid #1f2937;
+      background: radial-gradient(circle at top left, #111827 0, #020617 55%);
+      border-radius: 1rem;
+      border: 1px solid var(--border);
+      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.85);
+      padding: 1.25rem 1.5rem 1.75rem;
     }
-    .section-title {
-      font-size: 1.1rem;
-      margin-top: 1.5rem;
-      margin-bottom: 0.75rem;
+    .welcome {
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+    .tabs {
+      display: flex;
+      border-bottom: 1px solid var(--border);
+      margin: 0 -1.5rem 1.25rem;
+      padding: 0 1.5rem;
+      overflow-x: auto;
+    }
+    .tab {
+      padding: 0.6rem 1rem 0.7rem;
+      cursor: pointer;
+      font-size: 0.9rem;
+      border-bottom: 2px solid transparent;
+      color: var(--muted);
+      white-space: nowrap;
       text-transform: uppercase;
       letter-spacing: 0.12em;
-      color: #9ca3af;
+    }
+    .tab.active {
+      border-bottom-color: var(--accent);
+      color: var(--accent-soft);
+    }
+    .section {
+      display: none;
+    }
+    .section.active {
+      display: block;
+    }
+    .section-title {
+      font-size: 1rem;
+      margin-top: 0.3rem;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+    }
+    .section-subtitle {
+      margin: 0 0 0.75rem;
+      color: var(--muted);
+      font-size: 0.85rem;
     }
     label {
       display: block;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       margin-bottom: 0.2rem;
-      color: #d1d5db;
+      color: var(--text);
     }
     input[type="date"],
     input[type="time"],
     select,
+    input[type="text"],
     textarea {
       width: 100%;
-      box-sizing: border-box;
-      margin-bottom: 0.9rem;
+      margin-bottom: 0.75rem;
       padding: 0.5rem 0.6rem;
       border-radius: 0.5rem;
-      border: 1px solid #374151;
+      border: 1px solid var(--border);
       background: #020617;
-      color: #e5e7eb;
-      font-size: 0.95rem;
+      color: var(--text);
+      font-size: 0.9rem;
     }
     textarea {
-      min-height: 90px;
       resize: vertical;
+      min-height: 80px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+        "Liberation Mono", "Courier New", monospace;
+      white-space: pre-wrap;
     }
     small {
       display: block;
-      margin-bottom: 0.4rem;
-      color: #9ca3af;
-      font-size: 0.8rem;
+      margin-bottom: 0.3rem;
+      color: var(--muted);
+      font-size: 0.75rem;
     }
     .inline-row {
       display: flex;
-      gap: 1rem;
       flex-wrap: wrap;
+      gap: 1rem;
     }
     .inline-row > div {
       flex: 1 1 180px;
     }
     button {
       margin-top: 0.75rem;
-      padding: 0.6rem 1.6rem;
+      padding: 0.55rem 1.4rem;
       border-radius: 999px;
       border: none;
       cursor: pointer;
-      font-size: 0.95rem;
+      font-size: 0.85rem;
       font-weight: 600;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      background: #facc15;
+      background: var(--accent);
       color: #111827;
     }
     button:hover {
       background: #eab308;
     }
-    .output {
-      margin-top: 2rem;
+    .secondary {
+      background: transparent;
+      color: var(--accent-soft);
+      border: 1px solid var(--border);
+      margin-left: 0.6rem;
     }
-    .output textarea {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      min-height: 220px;
-      white-space: pre;
+    .secondary:hover {
+      border-color: var(--accent);
+    }
+    .output-area {
+      margin-top: 1.3rem;
     }
     .hint {
-      font-size: 0.8rem;
-      color: #9ca3af;
-      margin-top: 0.4rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 0.3rem;
     }
-    a {
-      color: #60a5fa;
+    code {
+      font-size: 0.8rem;
+      background: #020617;
+      padding: 0.12rem 0.3rem;
+      border-radius: 0.25rem;
+      border: 1px solid #111827;
+    }
+    @media (max-width: 640px) {
+      header {
+        padding: 1.2rem 1.1rem 0.8rem;
+      }
+      main {
+        padding: 0 1rem;
+      }
+      .card {
+        padding: 1.1rem 1.1rem 1.3rem;
+      }
     }
   </style>
 </head>
 <body>
 <header>
-  <h1>Bhakti Practice Log</h1>
+  <h1 class="title">Parallel Monkhood Journal</h1>
+  <p class="subtitle">A simple front door into your Git‑based monastic practice space.</p>
 </header>
 
 <main>
-  <section class="card">
-    <p class="hint">
-      Use this form to generate Markdown you can paste into your
-      <strong>bhakti-yoga/notes</strong>, <strong>bhakti-yoga/visions</strong>,
-      or <strong>bhakti-yoga/practice-logs</strong> files in the repository.
+  <div class="card">
+    <p class="welcome">
+      Welcome to your experimental monkhood console. Use the tabs below to generate Markdown
+      for your GitHub repository: modules, bhakti‑yoga, meditation, and festivals. Copy the
+      output into the corresponding files under <code>modules/</code>,
+      <code>bhakti-yoga/</code>, <code>meditation/</code>, or <code>festivals/</code>.
     </p>
 
-    <div class="section-title">Session Info</div>
-    <div class="inline-row">
-      <div>
-        <label for="date">Date</label>
-        <input type="date" id="date" />
-      </div>
-      <div>
-        <label for="time">Time (optional)</label>
-        <input type="time" id="time" />
-      </div>
-      <div>
-        <label for="entryType">Entry type</label>
-        <select id="entryType">
-          <option value="notes">Bhakti notes (general)</option>
-          <option value="vision">Bhakti vision</option>
-          <option value="practice">Bhakti practice log</option>
-          <option value="chant">Chant / kirtan entry</option>
-        </select>
-      </div>
+    <!-- Tabs -->
+    <div class="tabs">
+      <div class="tab active" data-target="tab-modules">Modules</div>
+      <div class="tab" data-target="tab-bhakti">Bhakti‑Yoga</div>
+      <div class="tab" data-target="tab-meditation">Meditation</div>
+      <div class="tab" data-target="tab-festivals">Festivals</div>
     </div>
 
-    <div class="section-title">Context</div>
-    <label for="title">Short title</label>
-    <input type="text" id="title" placeholder="Example: Evening kirtan at temple" />
-
-    <label for="context">Context</label>
-    <small>Where you were, who you were with, what practice you were doing.</small>
-    <textarea id="context"></textarea>
-
-    <div id="practiceBlock">
-      <div class="section-title">Practice Details</div>
-      <label for="practice">What did you actually do?</label>
-      <small>Rounds, kirtan, seva linked to this, readings, etc.</small>
-      <textarea id="practice"></textarea>
-
-      <label for="metrics">Optional metrics</label>
-      <small>Rounds completed, duration, number of bhajans, etc.</small>
-      <textarea id="metrics"></textarea>
-    </div>
-
-    <div id="visionBlock" style="display:none;">
-      <div class="section-title">Vision / Inner Experience</div>
-      <label for="vision">What did you see or experience?</label>
-      <small>Inner images, dreams, symbolic impressions during practice.</small>
-      <textarea id="vision"></textarea>
-    </div>
-
-    <div class="section-title">Heart reflections</div>
-    <label for="innerState">Inner state</label>
-    <small>Emotions, resistance, gratitude, insights.</small>
-    <textarea id="innerState"></textarea>
-
-    <label for="lessons">Lessons / realizations</label>
-    <textarea id="lessons"></textarea>
-
-    <label for="intentions">Intentions for next time</label>
-    <textarea id="intentions"></textarea>
-
-    <button type="button" onclick="generateMarkdown()">Generate Markdown</button>
-
-    <div class="output">
-      <div class="section-title">Markdown Output</div>
-      <textarea id="output" readonly></textarea>
-      <p class="hint">
-        Copy this text and paste it into the appropriate file in your GitHub
-        repo (for example, <code>bhakti-yoga/practice-logs/...</code>).
+    <!-- Modules tab -->
+    <section id="tab-modules" class="section active">
+      <div class="section-title">DYS Module Entry</div>
+      <p class="section-subtitle">
+        Generates Markdown for one session of a DYS module. Paste into the appropriate
+        <code>modules/DYSx/.../notes.md</code> or <code>reflections.md</code>.
       </p>
-    </div>
-  </section>
+
+      <div class="inline-row">
+        <div>
+          <label for="modDate">Date</label>
+          <input type="date" id="modDate" />
+        </div>
+        <div>
+          <label for="modSelect">Module</label>
+          <select id="modSelect">
+            <option value="DYS1-discover-inner-self">DYS1 – Discover Inner Self</option>
+            <option value="DYS2-discover-the-ultimate-genius">DYS2 – Discover The Ultimate Genius</option>
+            <option value="DYS3-discover-manual-of-life">DYS3 – Discover Manual of Life</option>
+            <option value="DYS4-discover-lasting-solution">DYS4 – Discover Lasting Solution</option>
+            <option value="DYS5-discover-sublime-joy-through-sound">DYS5 – Discover Sublime Joy Through Sound</option>
+            <option value="DYS6-discover-real-eternal-love">DYS6 – Discover Real Eternal Love</option>
+            <option value="DYS7-discover-the-happy-planet">DYS7 – Discover The Happy Planet</option>
+            <option value="DYS8-discover-true-unity-in-diversity-and-part1">DYS8 – Discover True Unity in Diversity (Part 1)</option>
+          </select>
+        </div>
+      </div>
+
+      <label for="modSummary">Summary of the session</label>
+      <textarea id="modSummary"></textarea>
+
+      <label for="modLife">How this touches my life</label>
+      <textarea id="modLife"></textarea>
+
+      <label for="modResolutions">Resolutions / experiments</label>
+      <textarea id="modResolutions"></textarea>
+
+      <label for="modQuestions">Questions for my mentor</label>
+      <textarea id="modQuestions"></textarea>
+
+      <div class="output-area">
+        <button type="button" onclick="generateModuleMd()">Generate module Markdown</button>
+        <textarea id="modOutput" placeholder="Generated Markdown will appear here..."></textarea>
+        <p class="hint">
+          Paste into the correct module file, e.g.
+          <code>modules/DYS1-discover-inner-self/notes/notes.md</code>.
+        </p>
+      </div>
+    </section>
+
+    <!-- Bhakti tab -->
+    <section id="tab-bhakti" class="section">
+      <div class="section-title">Bhakti‑Yoga Log</div>
+      <p class="section-subtitle">
+        Use for entries under <code>bhakti-yoga/notes</code>, <code>visions</code>,
+        <code>practice-logs</code>, or <code>chants</code>.
+      </p>
+
+      <div class="inline-row">
+        <div>
+          <label for="bDate">Date</label>
+          <input type="date" id="bDate" />
+        </div>
+        <div>
+          <label for="bType">Entry type</label>
+          <select id="bType">
+            <option value="notes">Bhakti notes (general)</option>
+            <option value="practice">Bhakti practice log</option>
+            <option value="vision">Bhakti vision</option>
+            <option value="chant">Chant / kirtan entry</option>
+          </select>
+        </div>
+      </div>
+
+      <label for="bTitle">Short title</label>
+      <input type="text" id="bTitle" placeholder="Evening kirtan, temple room" />
+
+      <label for="bContext">Context</label>
+      <textarea id="bContext"></textarea>
+
+      <label for="bBody">Details</label>
+      <small>What you did, saw, felt, or sang.</small>
+      <textarea id="bBody"></textarea>
+
+      <label for="bLessons">Lessons / realizations</label>
+      <textarea id="bLessons"></textarea>
+
+      <label for="bIntentions">Intentions for next time</label>
+      <textarea id="bIntentions"></textarea>
+
+      <div class="output-area">
+        <button type="button" onclick="generateBhaktiMd()">Generate bhakti Markdown</button>
+        <textarea id="bOutput" placeholder="Generated Markdown will appear here..."></textarea>
+        <p class="hint">
+          Choose destination based on entry type:
+          <code>bhakti-yoga/notes</code>,
+          <code>bhakti-yoga/practice-logs</code>,
+          <code>bhakti-yoga/visions</code>, or
+          <code>bhakti-yoga/chants</code>.
+        </p>
+      </div>
+    </section>
+
+    <!-- Meditation tab -->
+    <section id="tab-meditation" class="section">
+      <div class="section-title">Meditation Log</div>
+      <p class="section-subtitle">
+        For entries under <code>meditation/notes</code>, <code>practice-logs</code>, and
+        <code>visions</code>.
+      </p>
+
+      <div class="inline-row">
+        <div>
+          <label for="mDate">Date</label>
+          <input type="date" id="mDate" />
+        </div>
+        <div>
+          <label for="mDuration">Duration (minutes)</label>
+          <input type="text" id="mDuration" placeholder="e.g. 45" />
+        </div>
+      </div>
+
+      <label for="mPractice">What did you practice?</label>
+      <small>Type of meditation or japa focus.</small>
+      <textarea id="mPractice"></textarea>
+
+      <label for="mExperience">Inner experience</label>
+      <textarea id="mExperience"></textarea>
+
+      <label for="mObstacles">Obstacles / distractions</label>
+      <textarea id="mObstacles"></textarea>
+
+      <label for="mInsights">Insights</label>
+      <textarea id="mInsights"></textarea>
+
+      <div class="output-area">
+        <button type="button" onclick="generateMeditationMd()">Generate meditation Markdown</button>
+        <textarea id="mOutput" placeholder="Generated Markdown will appear here..."></textarea>
+        <p class="hint">
+          Paste into <code>meditation/practice-logs</code> or <code>meditation/notes</code> as appropriate.
+        </p>
+      </div>
+    </section>
+
+    <!-- Festivals tab -->
+    <section id="tab-festivals" class="section">
+      <div class="section-title">Festival Entry</div>
+      <p class="section-subtitle">
+        Records a festival or holy day under the correct month in <code>festivals/</code>.
+      </p>
+
+      <div class="inline-row">
+        <div>
+          <label for="fDate">Date</label>
+          <input type="date" id="fDate" />
+        </div>
+        <div>
+          <label for="fName">Festival name</label>
+          <input type="text" id="fName" placeholder="e.g. Gaura Purnima" />
+        </div>
+      </div>
+
+      <label for="fPlace">Where & with whom</label>
+      <textarea id="fPlace"></textarea>
+
+      <label for="fEvents">What happened</label>
+      <small>Services, kirtans, talks, special moments.</small>
+      <textarea id="fEvents"></textarea>
+
+      <label for="fRealizations">Realizations</label>
+      <textarea id="fRealizations"></textarea>
+
+      <div class="output-area">
+        <button type="button" onclick="generateFestivalMd()">Generate festival Markdown</button>
+        <textarea id="fOutput" placeholder="Generated Markdown will appear here..."></textarea>
+        <p class="hint">
+          Paste into the corresponding month file under <code>festivals/01-january</code>,
+          <code>02-february</code>, etc.
+        </p>
+      </div>
+    </section>
+  </div>
 </main>
 
 <script>
-  const entryTypeEl = document.getElementById('entryType');
-  const practiceBlock = document.getElementById('practiceBlock');
-  const visionBlock = document.getElementById('visionBlock');
+  // Tab handling
+  const tabs = document.querySelectorAll('.tab');
+  const sections = document.querySelectorAll('.section');
 
-  entryTypeEl.addEventListener('change', () => {
-    const type = entryTypeEl.value;
-    if (type === 'vision') {
-      visionBlock.style.display = 'block';
-      practiceBlock.style.display = 'none';
-    } else {
-      visionBlock.style.display = 'none';
-      practiceBlock.style.display = 'block';
-    }
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const target = tab.getAttribute('data-target');
+      tabs.forEach(t => t.classList.remove('active'));
+      sections.forEach(s => s.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(target).classList.add('active');
+    });
   });
 
-  function escapeMd(text) {
-    return text.replace(/\r\n/g, '\n');
+  function esc(text) {
+    return (text || '').replace(/\r\n/g, '\n').trim();
   }
 
-  function generateMarkdown() {
-    const date = document.getElementById('date').value || '';
-    const time = document.getElementById('time').value || '';
-    const entryType = document.getElementById('entryType').value;
-    const title = document.getElementById('title').value.trim();
-    const context = escapeMd(document.getElementById('context').value.trim());
-    const practice = escapeMd(document.getElementById('practice').value.trim());
-    const metrics = escapeMd(document.getElementById('metrics').value.trim());
-    const vision = escapeMd(document.getElementById('vision').value.trim());
-    const innerState = escapeMd(document.getElementById('innerState').value.trim());
-    const lessons = escapeMd(document.getElementById('lessons').value.trim());
-    const intentions = escapeMd(document.getElementById('intentions').value.trim());
+  // Modules MD
+  function generateModuleMd() {
+    const date = document.getElementById('modDate').value;
+    const mod = document.getElementById('modSelect').value;
+    const summary = esc(document.getElementById('modSummary').value);
+    const life = esc(document.getElementById('modLife').value);
+    const resolutions = esc(document.getElementById('modResolutions').value);
+    const questions = esc(document.getElementById('modQuestions').value);
 
-    let headingType = 'Bhakti Notes Entry';
-    if (entryType === 'practice') headingType = 'Bhakti Practice Log';
-    if (entryType === 'vision') headingType = 'Bhakti Vision Entry';
-    if (entryType === 'chant') headingType = 'Chant / Kirtan Entry';
+    let md = `# Module Session\n\n`;
+    if (date) md += `## Date\n${date}\n\n`;
+    md += `## Module\n${mod}\n\n`;
+    if (summary) md += `## Summary of the session\n${summary}\n\n`;
+    if (life) md += `## How this touched my life\n${life}\n\n`;
+    if (resolutions) md += `## Resolutions / experiments\n${resolutions}\n\n`;
+    if (questions) md += `## Questions for my mentor\n${questions}\n\n`;
 
-    let md = `# ${headingType}\n\n`;
+    document.getElementById('modOutput').value = md.trim() + '\n';
+  }
 
+  // Bhakti MD
+  function generateBhaktiMd() {
+    const date = document.getElementById('bDate').value;
+    const type = document.getElementById('bType').value;
+    const title = esc(document.getElementById('bTitle').value);
+    const context = esc(document.getElementById('bContext').value);
+    const body = esc(document.getElementById('bBody').value);
+    const lessons = esc(document.getElementById('bLessons').value);
+    const intentions = esc(document.getElementById('bIntentions').value);
+
+    let heading = 'Bhakti Notes Entry';
+    if (type === 'practice') heading = 'Bhakti Practice Log';
+    if (type === 'vision') heading = 'Bhakti Vision Entry';
+    if (type === 'chant') heading = 'Chant / Kirtan Entry';
+
+    let md = `# ${heading}\n\n`;
     if (title) md += `## Title\n${title}\n\n`;
+    if (date) md += `## Date\n${date}\n\n`;
+    if (context) md += `## Context\n${context}\n\n`;
+    if (body) md += `## Details\n${body}\n\n`;
+    if (lessons) md += `## Lessons / realizations\n${lessons}\n\n`;
+    if (intentions) md += `## Intentions for next time\n${intentions}\n\n`;
 
-    if (date || time) {
-      md += `## When\n`;
-      if (date) md += `- Date: ${date}\n`;
-      if (time) md += `- Time: ${time}\n`;
-      md += `\n`;
-    }
+    document.getElementById('bOutput').value = md.trim() + '\n';
+  }
 
-    if (context) {
-      md += `## Context\n${context}\n\n`;
-    }
+  // Meditation MD
+  function generateMeditationMd() {
+    const date = document.getElementById('mDate').value;
+    const duration = esc(document.getElementById('mDuration').value);
+    const practice = esc(document.getElementById('mPractice').value);
+    const experience = esc(document.getElementById('mExperience').value);
+    const obstacles = esc(document.getElementById('mObstacles').value);
+    const insights = esc(document.getElementById('mInsights').value);
 
-    if (entryType === 'vision') {
-      if (vision) {
-        md += `## Vision / Inner Experience\n${vision}\n\n`;
-      }
-    } else {
-      if (practice) {
-        md += `## What I Did\n${practice}\n\n`;
-      }
-      if (metrics) {
-        md += `## Metrics (optional)\n${metrics}\n\n`;
-      }
-    }
+    let md = `# Meditation Practice Log\n\n`;
+    if (date) md += `## Date\n${date}\n\n`;
+    if (duration) md += `## Duration\n${duration} minutes\n\n`;
+    if (practice) md += `## Practice\n${practice}\n\n`;
+    if (experience) md += `## Inner experience\n${experience}\n\n`;
+    if (obstacles) md += `## Obstacles / distractions\n${obstacles}\n\n`;
+    if (insights) md += `## Insights\n${insights}\n\n`;
 
-    if (innerState) {
-      md += `## Inner State\n${innerState}\n\n`;
-    }
+    document.getElementById('mOutput').value = md.trim() + '\n';
+  }
 
-    if (lessons) {
-      md += `## Lessons / Realizations\n${lessons}\n\n`;
-    }
+  // Festivals MD
+  function generateFestivalMd() {
+    const date = document.getElementById('fDate').value;
+    const name = esc(document.getElementById('fName').value);
+    const place = esc(document.getElementById('fPlace').value);
+    const events = esc(document.getElementById('fEvents').value);
+    const realizations = esc(document.getElementById('fRealizations').value);
 
-    if (intentions) {
-      md += `## Intentions for Next Time\n${intentions}\n\n`;
-    }
+    let md = `# Festival Entry\n\n`;
+    if (name) md += `## Name\n${name}\n\n`;
+    if (date) md += `## Date\n${date}\n\n`;
+    if (place) md += `## Where & with whom\n${place}\n\n`;
+    if (events) md += `## What happened\n${events}\n\n`;
+    if (realizations) md += `## Realizations\n${realizations}\n\n`;
 
-    document.getElementById('output').value = md.trim() + '\n';
+    document.getElementById('fOutput').value = md.trim() + '\n';
   }
 </script>
 </body>
