@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Bhakti Practice Log</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #0f172a;
+      color: #e5e7eb;
+    }
+    header {
+      background: #111827;
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid #1f2937;
+    }
+    h1 {
+      margin: 0;
+      font-size: 1.7rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    main {
+      max-width: 960px;
+      margin: 2rem auto;
+      padding: 0 1.5rem 3rem;
+    }
+    .card {
+      background: #111827;
+      border-radius: 0.75rem;
+      padding: 1.75rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+      border: 1px solid #1f2937;
+    }
+    .section-title {
+      font-size: 1.1rem;
+      margin-top: 1.5rem;
+      margin-bottom: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #9ca3af;
+    }
+    label {
+      display: block;
+      font-size: 0.9rem;
+      margin-bottom: 0.2rem;
+      color: #d1d5db;
+    }
+    input[type="date"],
+    input[type="time"],
+    select,
+    textarea {
+      width: 100%;
+      box-sizing: border-box;
+      margin-bottom: 0.9rem;
+      padding: 0.5rem 0.6rem;
+      border-radius: 0.5rem;
+      border: 1px solid #374151;
+      background: #020617;
+      color: #e5e7eb;
+      font-size: 0.95rem;
+    }
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+    small {
+      display: block;
+      margin-bottom: 0.4rem;
+      color: #9ca3af;
+      font-size: 0.8rem;
+    }
+    .inline-row {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .inline-row > div {
+      flex: 1 1 180px;
+    }
+    button {
+      margin-top: 0.75rem;
+      padding: 0.6rem 1.6rem;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      background: #facc15;
+      color: #111827;
+    }
+    button:hover {
+      background: #eab308;
+    }
+    .output {
+      margin-top: 2rem;
+    }
+    .output textarea {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      min-height: 220px;
+      white-space: pre;
+    }
+    .hint {
+      font-size: 0.8rem;
+      color: #9ca3af;
+      margin-top: 0.4rem;
+    }
+    a {
+      color: #60a5fa;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>Bhakti Practice Log</h1>
+</header>
+
+<main>
+  <section class="card">
+    <p class="hint">
+      Use this form to generate Markdown you can paste into your
+      <strong>bhakti-yoga/notes</strong>, <strong>bhakti-yoga/visions</strong>,
+      or <strong>bhakti-yoga/practice-logs</strong> files in the repository.
+    </p>
+
+    <div class="section-title">Session Info</div>
+    <div class="inline-row">
+      <div>
+        <label for="date">Date</label>
+        <input type="date" id="date" />
+      </div>
+      <div>
+        <label for="time">Time (optional)</label>
+        <input type="time" id="time" />
+      </div>
+      <div>
+        <label for="entryType">Entry type</label>
+        <select id="entryType">
+          <option value="notes">Bhakti notes (general)</option>
+          <option value="vision">Bhakti vision</option>
+          <option value="practice">Bhakti practice log</option>
+          <option value="chant">Chant / kirtan entry</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="section-title">Context</div>
+    <label for="title">Short title</label>
+    <input type="text" id="title" placeholder="Example: Evening kirtan at temple" />
+
+    <label for="context">Context</label>
+    <small>Where you were, who you were with, what practice you were doing.</small>
+    <textarea id="context"></textarea>
+
+    <div id="practiceBlock">
+      <div class="section-title">Practice Details</div>
+      <label for="practice">What did you actually do?</label>
+      <small>Rounds, kirtan, seva linked to this, readings, etc.</small>
+      <textarea id="practice"></textarea>
+
+      <label for="metrics">Optional metrics</label>
+      <small>Rounds completed, duration, number of bhajans, etc.</small>
+      <textarea id="metrics"></textarea>
+    </div>
+
+    <div id="visionBlock" style="display:none;">
+      <div class="section-title">Vision / Inner Experience</div>
+      <label for="vision">What did you see or experience?</label>
+      <small>Inner images, dreams, symbolic impressions during practice.</small>
+      <textarea id="vision"></textarea>
+    </div>
+
+    <div class="section-title">Heart reflections</div>
+    <label for="innerState">Inner state</label>
+    <small>Emotions, resistance, gratitude, insights.</small>
+    <textarea id="innerState"></textarea>
+
+    <label for="lessons">Lessons / realizations</label>
+    <textarea id="lessons"></textarea>
+
+    <label for="intentions">Intentions for next time</label>
+    <textarea id="intentions"></textarea>
+
+    <button type="button" onclick="generateMarkdown()">Generate Markdown</button>
+
+    <div class="output">
+      <div class="section-title">Markdown Output</div>
+      <textarea id="output" readonly></textarea>
+      <p class="hint">
+        Copy this text and paste it into the appropriate file in your GitHub
+        repo (for example, <code>bhakti-yoga/practice-logs/...</code>).
+      </p>
+    </div>
+  </section>
+</main>
+
+<script>
+  const entryTypeEl = document.getElementById('entryType');
+  const practiceBlock = document.getElementById('practiceBlock');
+  const visionBlock = document.getElementById('visionBlock');
+
+  entryTypeEl.addEventListener('change', () => {
+    const type = entryTypeEl.value;
+    if (type === 'vision') {
+      visionBlock.style.display = 'block';
+      practiceBlock.style.display = 'none';
+    } else {
+      visionBlock.style.display = 'none';
+      practiceBlock.style.display = 'block';
+    }
+  });
+
+  function escapeMd(text) {
+    return text.replace(/\r\n/g, '\n');
+  }
+
+  function generateMarkdown() {
+    const date = document.getElementById('date').value || '';
+    const time = document.getElementById('time').value || '';
+    const entryType = document.getElementById('entryType').value;
+    const title = document.getElementById('title').value.trim();
+    const context = escapeMd(document.getElementById('context').value.trim());
+    const practice = escapeMd(document.getElementById('practice').value.trim());
+    const metrics = escapeMd(document.getElementById('metrics').value.trim());
+    const vision = escapeMd(document.getElementById('vision').value.trim());
+    const innerState = escapeMd(document.getElementById('innerState').value.trim());
+    const lessons = escapeMd(document.getElementById('lessons').value.trim());
+    const intentions = escapeMd(document.getElementById('intentions').value.trim());
+
+    let headingType = 'Bhakti Notes Entry';
+    if (entryType === 'practice') headingType = 'Bhakti Practice Log';
+    if (entryType === 'vision') headingType = 'Bhakti Vision Entry';
+    if (entryType === 'chant') headingType = 'Chant / Kirtan Entry';
+
+    let md = `# ${headingType}\n\n`;
+
+    if (title) md += `## Title\n${title}\n\n`;
+
+    if (date || time) {
+      md += `## When\n`;
+      if (date) md += `- Date: ${date}\n`;
+      if (time) md += `- Time: ${time}\n`;
+      md += `\n`;
+    }
+
+    if (context) {
+      md += `## Context\n${context}\n\n`;
+    }
+
+    if (entryType === 'vision') {
+      if (vision) {
+        md += `## Vision / Inner Experience\n${vision}\n\n`;
+      }
+    } else {
+      if (practice) {
+        md += `## What I Did\n${practice}\n\n`;
+      }
+      if (metrics) {
+        md += `## Metrics (optional)\n${metrics}\n\n`;
+      }
+    }
+
+    if (innerState) {
+      md += `## Inner State\n${innerState}\n\n`;
+    }
+
+    if (lessons) {
+      md += `## Lessons / Realizations\n${lessons}\n\n`;
+    }
+
+    if (intentions) {
+      md += `## Intentions for Next Time\n${intentions}\n\n`;
+    }
+
+    document.getElementById('output').value = md.trim() + '\n';
+  }
+</script>
+</body>
+</html>
